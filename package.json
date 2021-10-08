@@ -1,0 +1,11 @@
+{
+  "name": "endline_server",
+  "version": "1.0.0",
+  "description": "for fcm push to EndLine client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Enterprise09",
+  "license": "MIT"
+}
