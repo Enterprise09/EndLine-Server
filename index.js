@@ -48,3 +48,24 @@ app.get("/fcm-send", (req, res) => {
       res.send("<h1>Error: " + err + "</h1>");
     });
 });
+
+app.post("/registe", (req, res) => {
+  console.log("in /registe");
+  // res.send("<h1>in registe page</h1>");
+  var inputData;
+  req.on("data", (data) => {
+    inputData = JSON.parse(data);
+  });
+  req.on("end", () => {
+    console.log(
+      "user_id : " +
+        inputData.user_id +
+        ", name: " +
+        inputData.user_name +
+        ", token: " +
+        inputData.user_token
+    );
+  });
+  res.write("OK");
+  res.end();
+});
