@@ -10,9 +10,7 @@ const express = require("express");
 const app = express();
 
 const PORT = 3000;
-let token =
-  "eeHQmOe-_zI:APA91bEgGayAbOX7rPPwnS2GLvmsBdB-TeZnQhHAtWjJT4m3qgHQKh08OxUwKzc9Cx-2aiY2zMVHl1v_7oAmkJY4FgPPRSVp0_JBenxRUK6Erv6mKRBXswEwGyfhRVvVaNsT2_VqXKb-";
-
+let token;
 let message = {
   notification: {
     title: "제목",
@@ -40,7 +38,7 @@ app.get("/fcm-send", (req, res) => {
     .messaging()
     .send(message)
     .then((response) => {
-      console.log("Seccess: ", response);
+      console.log("Success: ", response);
       res.send("<h1>Success: " + response + "</h1>");
     })
     .catch((err) => {
@@ -49,22 +47,17 @@ app.get("/fcm-send", (req, res) => {
     });
 });
 
-app.post("/registe", (req, res) => {
-  console.log("in /registe");
-  // res.send("<h1>in registe page</h1>");
+app.post("/register", (req, res) => {
+  console.log("in /register");
   var inputData;
   req.on("data", (data) => {
     inputData = JSON.parse(data);
   });
   req.on("end", () => {
     console.log(
-      "user_id : " +
-        inputData.user_id +
-        ", name: " +
-        inputData.user_name +
-        ", token: " +
-        inputData.user_token
+      "user_uid : " + inputData.user_id + ", token: " + inputData.user_token
     );
+    message.token = inputData.user_token;
   });
   res.write("OK");
   res.end();
