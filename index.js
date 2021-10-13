@@ -48,14 +48,14 @@ app.get("/fcm-send", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  console.log("in /register");
+  console.log("post : in /register");
   var inputData;
   req.on("data", (data) => {
     inputData = JSON.parse(data);
   });
   req.on("end", () => {
     console.log(
-      "user_uid : " + inputData.user_id + ", token: " + inputData.user_token
+      "user_uid : " + inputData.user_uid + ", token: " + inputData.user_token
     );
     message.token = inputData.user_token;
   });
