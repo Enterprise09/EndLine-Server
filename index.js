@@ -1,13 +1,13 @@
 const admin = require("firebase-admin");
+const express = require("express");
+const app = express();
 
 let account = require("./fcm-server-sdk.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(account),
 });
-
-const express = require("express");
-const app = express();
+const firestore = admin.firestore();
 
 const PORT = 3000;
 let token;
@@ -30,6 +30,17 @@ app.listen(PORT, () => {
 app.get("/", (req, res) => {
   console.log("/: in root url");
   res.send("<h1>in root url</h1>");
+});
+
+app.get("/getdata", (req, res) => {
+  firestore.collection("test").onSnapshot((snapshot) => {
+    const testArray = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    console.log(testArray);
+  });
+  res.send("<h1>on /getdata</h1>");
 });
 
 app.get("/fcm-send", (req, res) => {
