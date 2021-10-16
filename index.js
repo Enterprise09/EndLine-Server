@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
 const express = require("express");
 const app = express();
+const schedule = require("node-schedule");
 
 let account = require("./fcm-server-sdk.json");
 
@@ -72,4 +73,8 @@ app.post("/register", (req, res) => {
   });
   res.write("OK");
   res.end();
+});
+
+const timeEvent = schedule.scheduleJob("*/5 * * * * *", () => {
+  console.log("time Event");
 });
