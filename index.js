@@ -64,6 +64,10 @@ app.post("/register", (req, res) => {
   var inputData;
   req.on("data", (data) => {
     inputData = JSON.parse(data);
+    firestore.collection("userinfo").add({
+      user_uid: inputData.user_uid,
+      user_token: inputData.user_token,
+    });
   });
   req.on("end", () => {
     console.log(
@@ -75,6 +79,11 @@ app.post("/register", (req, res) => {
   res.end();
 });
 
-const timeEvent = schedule.scheduleJob("*/5 * * * * *", () => {
-  console.log("time Event");
+const timeEvent = schedule.scheduleJob("*/10 * * * * *", () => {
+  firestore.collection("test").onSnapshot((snapshot) => {
+    const testArray = snapshot.docs.map((doc) => ({
+      ...doc.data(),
+    }));
+    console.log(testArray);
+  });
 });
