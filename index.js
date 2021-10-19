@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
 const express = require("express");
 const app = express();
+const port = process.env.port || 3000;
 const schedule = require("node-schedule");
 
 let account = require("./fcm-server-sdk.json");
@@ -9,8 +10,6 @@ admin.initializeApp({
   credential: admin.credential.cert(account),
 });
 const firestore = admin.firestore();
-
-const PORT = 3000;
 let token;
 let message = {
   notification: {
@@ -24,8 +23,8 @@ let message = {
   token: token,
 };
 
-app.listen(PORT, () => {
-  console.log("Listen in port 3000");
+app.listen(port, () => {
+  console.log("Listen in port ", port);
 });
 
 app.get("/", (req, res) => {
@@ -80,7 +79,7 @@ app.post("/register", (req, res) => {
 });
 
 const timeEvent = schedule.scheduleJob("*/10 * * * * *", () => {
-  firestore.collection("test").onSnapshot((snapshot) => {
+  firestore.collection("mainData").onSnapshot((snapshot) => {
     const testArray = snapshot.docs.map((doc) => ({
       ...doc.data(),
     }));
