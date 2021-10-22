@@ -44,6 +44,7 @@ app.get("/getdata", (req, res) => {
 });
 
 app.get("/fcm-send", (req, res) => {
+  //fcm-send test url
   console.log("/fcm-send: in fcm send url");
   admin
     .messaging()
@@ -78,7 +79,8 @@ app.post("/register", (req, res) => {
   res.end();
 });
 
-const timeEvent = schedule.scheduleJob("*/10 * * * * *", () => {
+const timeEvent = schedule.scheduleJob("* * 13 * * *", () => {
+  //13hour execute
   firestore.collection("mainData").onSnapshot((snapshot) => {
     const testArray = snapshot.docs.map((doc) => ({
       ...doc.data(),
