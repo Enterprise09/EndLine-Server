@@ -81,6 +81,11 @@ app.post("/register", (req, res) => {
 
 const timeEvent = schedule.scheduleJob("* * 13 * * *", () => {
   //13hour execute
+  /*
+    searching item that have 3days spare
+    and sending fcm message
+    with some information that item
+  */
   firestore.collection("mainData").onSnapshot((snapshot) => {
     const testArray = snapshot.docs.map((doc) => ({
       ...doc.data(),
