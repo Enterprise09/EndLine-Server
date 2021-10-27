@@ -91,5 +91,20 @@ const timeEvent = schedule.scheduleJob("* * 13 * * *", () => {
       ...doc.data(),
     }));
     console.log(testArray);
+    /*
+      sendFCM();
+    */
   });
 });
+
+const sendFCM = () => {
+  admin
+    .messaging()
+    .send(message)
+    .then((response) => {
+      console.log("Success: ", response);
+    })
+    .catch((err) => {
+      console.log("error: ", err);
+    });
+};
